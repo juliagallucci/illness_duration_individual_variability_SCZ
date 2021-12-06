@@ -1,0 +1,18 @@
+#get list of text files
+list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/FWD_0_5/", recursive = TRUE,
+                            pattern = ".csv", 
+                            full.names = TRUE)
+
+txt_files_df_parcellation <- lapply(list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combie text files into a dataframe
+combined_df_parcellation <- do.call("cbind", lapply(txt_files_df_parcellation, as.data.frame))
+#559 participants (rows) by 268 ROIS (columns)
+df.final_parcellation <- as.data.frame(t(combined_df_parcellation))
+
+#pairwise correlational distance
+#pairwise distance measure 0 to 1, 0 is less distance = more similar, 1 is more distance = less similar
+corr_shen268 = rdist::pdist(df.final_parcellation, metric = "correlation")
+#calculate mean distance for each subject
+distance = rowMeans(corr_shen268,na.rm = TRUE)
+#save as csv
+write.csv(distance, "cor_distance.csv")
