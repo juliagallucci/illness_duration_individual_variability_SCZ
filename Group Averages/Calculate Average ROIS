@@ -1,0 +1,72 @@
+### calculate each subgroups average ROI activity (268 values), save as CSV
+
+low_scz_list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/scz/low_var_scz/", recursive = TRUE,
+                                        pattern = ".csv", 
+                                        full.names = TRUE)
+
+low_scz_txt_files_df_parcellation <- lapply(low_scz_list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combine text files into a dataframe
+low_scz_combined_df_parcellation <- do.call("cbind", lapply(low_scz_txt_files_df_parcellation, as.data.frame))
+low_scz_df.final_parcellation <- as.data.frame(t(low_scz_combined_df_parcellation))
+low_scz_average = colMeans(low_scz_df.final_parcellation)
+low_scz_average = as.data.frame(low_scz_average)
+write.csv (low_scz_average, "low_scz_average.csv")
+
+high_scz_list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/scz/high_var_scz/", recursive = TRUE,
+                                                 pattern = ".csv", 
+                                                 full.names = TRUE)
+high_scz_txt_files_df_parcellation <- lapply(high_scz_list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combine text files into a dataframe
+high_scz_combined_df_parcellation <- do.call("cbind", lapply(high_scz_txt_files_df_parcellation, as.data.frame))
+high_scz_df.final_parcellation <- as.data.frame(t(high_scz_combined_df_parcellation))
+high_scz_average = colMeans(high_scz_df.final_parcellation)
+high_scz_average = as.data.frame(high_scz_average)
+write.csv (high_scz_average, "high_scz_average.csv")
+
+############################################
+low_bip_list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/bip/low_var_bip/", recursive = TRUE,
+                                                 pattern = ".csv", 
+                                                 full.names = TRUE)
+
+low_bip_txt_files_df_parcellation <- lapply(low_bip_list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combine text files into a dataframe
+low_bip_combined_df_parcellation <- do.call("cbind", lapply(low_bip_txt_files_df_parcellation, as.data.frame))
+low_bip_df.final_parcellation <- as.data.frame(t(low_bip_combined_df_parcellation))
+low_bip_average = colMeans(low_bip_df.final_parcellation)
+low_bip_average = as.data.frame(low_bip_average)
+write.csv (low_bip_average, "low_bip_average.csv")
+high_bip_list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/bip/high_var_bip/", recursive = TRUE,
+                                                 pattern = ".csv", 
+                                                 full.names = TRUE)
+
+high_bip_txt_files_df_parcellation <- lapply(high_bip_list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combine text files into a dataframe
+high_bip_combined_df_parcellation <- do.call("cbind", lapply(high_bip_txt_files_df_parcellation, as.data.frame))
+high_bip_df.final_parcellation <- as.data.frame(t(high_bip_combined_df_parcellation))
+high_bip_average = colMeans(high_bip_df.final_parcellation)
+high_bip_average = as.data.frame(high_bip_average)
+write.csv (high_bip_average, "high_bip_average.csv")
+############################################
+low_ctrl_list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/low_var_cnt/", recursive = TRUE,
+                                                 pattern = ".csv", 
+                                                 full.names = TRUE)
+
+low_ctrl_txt_files_df_parcellation <- lapply(low_ctrl_list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combine text files into a dataframe
+low_ctrl_combined_df_parcellation <- do.call("cbind", lapply(low_ctrl_txt_files_df_parcellation, as.data.frame))
+low_ctrl_df.final_parcellation <- as.data.frame(t(low_ctrl_combined_df_parcellation))
+low_ctrl_average = colMeans(low_ctrl_df.final_parcellation)
+low_ctrl_average = as.data.frame(low_ctrl_average)
+write.csv (low_ctrl_average, "low_ctrl_average.csv")
+
+high_ctrl_list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/high_var_cnt/", recursive = TRUE,
+                                            pattern = ".csv", 
+                                            full.names = TRUE)
+
+high_ctrl_txt_files_df_parcellation <- lapply(high_ctrl_list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combine text files into a dataframe
+high_ctrl_combined_df_parcellation <- do.call("cbind", lapply(high_ctrl_txt_files_df_parcellation, as.data.frame))
+high_ctrl_df.final_parcellation <- as.data.frame(t(high_ctrl_combined_df_parcellation))
+high_ctrl_average = colMeans(high_ctrl_df.final_parcellation)
+high_ctrl_average = as.data.frame(high_ctrl_average)
+write.csv (high_ctrl_average, "high_ctrl_average.csv")
