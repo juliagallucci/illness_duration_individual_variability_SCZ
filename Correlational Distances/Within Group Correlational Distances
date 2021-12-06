@@ -1,0 +1,133 @@
+################################# CONTROLS 
+list_of_files_parcellation_ctrl <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/cnt_fd_05/", recursive = TRUE,
+                                              pattern = ".csv", 
+                                              full.names = TRUE)
+
+txt_files_df_parcellation_ctrl <- lapply(list_of_files_parcellation_ctrl, function(x) {x = read.table(file = x, header = FALSE, sep =","})
+#combie text files into a dataframe
+combined_df_parcellation_ctrl <- do.call("cbind", lapply(txt_files_df_parcellation_ctrl, as.data.frame))
+#212 participants (rows) by 268 ROIS (columns)
+df.final_parcellation_ctrl <- as.data.frame(t(combined_df_parcellation_ctrl))
+
+#pairwise correlational distance
+#pairwise distance measure 0 to 1, 0 is less distance = more similar, 1 is more distance = less similar
+corr_ctrl = rdist::pdist(df.final_parcellation_ctrl, metric = "correlation")
+
+library(corrplot)
+library(tidyverse)
+
+corrdf = as.data.frame(corr_ctrl)
+#rows belong to Ctrl, add unique identifier 
+rownames(corrdf) <- paste(c(rep('Ctrl', 212)), seq(1:nrow(corrdf)), sep='_')
+colnames(corrdf) <- rownames(corrdf)
+
+#THIS IS WHERE WE'RE ORDERING AND SORTING
+CTRL_df <- corrdf[grepl('Ctrl', rownames(corrdf)),grepl('Ctrl', colnames(corrdf))]
+
+
+#get order of TDC columns by decreasing//increasing columnsum value
+CTRL_order <- colnames(CTRL_df[order(colSums(corrdf[, names(corrdf) %in% names(CTRL_df)]), decreasing=T)])
+#make explicit the desired organization of the correlation matrix 
+order <- c(CTRL_order)
+#reorganize corrmat as desired
+corrdf <- corrdf[order,order]
+
+#MAKE PLOT FIGURE 5
+#set custom colour scale, for plot
+myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
+#make sure corrmat is a matrix, for plotting
+corrdf <- as.matrix(corrdf)
+#visualize matrix for CTRL only
+corrplot(corrdf, 
+         method='color', #get full square, instead of circles
+         col.lim=c(0,1), #set limits of colour scale
+         cl.length =3,
+         col=myColours(100)) #use 100 unique colour shared
+         
+ 
+################################# BIPOLAR
+list_of_files_parcellation_bip <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/bip_fd_05/", recursive = TRUE,
+                                              pattern = ".csv", 
+                                              full.names = TRUE)
+
+txt_files_df_parcellation_bip <- lapply(list_of_files_parcellation_bip, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combie text files into a dataframe
+combined_df_parcellation_bip <- do.call("cbind", lapply(txt_files_df_parcellation_bip, as.data.frame))
+#108 participants (rows) by 268 ROIS (columns)
+df.final_parcellation_bip <- as.data.frame(t(combined_df_parcellation_bip))
+
+#pairwise correlational distance
+#pairwise distance measure 0 to 1, 0 is less distance = more similar, 1 is more distance = less similar
+corr = rdist::pdist(df.final_parcellation_bip, metric = "correlation")
+
+corrdf = as.data.frame(corr)
+#rows belong to BIP, and add unique identifier 
+rownames(corrdf) <- paste(c(rep('BIP', 108)), seq(1:nrow(corrdf)), sep='_')
+colnames(corrdf) <- rownames(corrdf)
+
+#THIS IS WHERE WE'RE ORDERING AND SORTING
+BIP_df <- corrdf[grepl('BIP', rownames(corrdf)),grepl('BIP', colnames(corrdf))]
+
+#get order of BIP columns by decreasing columnsum value
+BIP_order <- colnames(BIP_df[order(colSums(corrdf[, names(corrdf) %in% names(BIP_df)]), decreasing=T)])
+order <- c(BIP_order)
+#reorganize corrmat as desired
+corrdf <- corrdf[order,order]
+
+#MAKE PLOT FIGURE 5
+#set custom colour scale, for plot
+myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
+#make sure corrmat is a matrix, for plotting
+corrdf <- as.matrix(corrdf)
+#visualize matrix for BIP only
+corrplot(corrdf, 
+         method='color', #get full square, instead of circles
+         col.lim=c(0,1), #set limits of colour scale
+         cl.length =3,
+         col=myColours(100)) #use 100 unique colour shared
+         
+
+
+################################# SCHIZOPHRENIA
+list_of_files_parcellation_scz <- list.files(path = "/mnt/tigrlab/projects/jgallucci/project2/scz_fd_05/", recursive = TRUE,
+                                             pattern = ".csv", 
+                                             full.names = TRUE)
+
+txt_files_df_parcellation_scz <- lapply(list_of_files_parcellation_scz, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
+#combie text files into a dataframe
+combined_df_parcellation_scz <- do.call("cbind", lapply(txt_files_df_parcellation_scz, as.data.frame))
+#239 participants (rows) by 268 ROIS (columns)
+df.final_parcellation_scz <- as.data.frame(t(combined_df_parcellation_scz))
+
+#pairwise correlational distance
+#pairwise distance measure 0 to 1, 0 is less distance = more similar, 1 is more distance = less similar
+corr = rdist::pdist(df.final_parcellation_scz, metric = "correlation")
+
+corrdf = as.data.frame(corr)
+#rows belong to SCZ and add unique identifier 
+rownames(corrdf) <- paste(c(rep('SCZ', 239)), seq(1:nrow(corrdf)), sep='_')
+colnames(corrdf) <- rownames(corrdf)
+
+#THIS IS WHERE WE'RE ORDERING AND SORTING
+#for ease, make df containing separate HC and SSD
+SCZ_df <- corrdf[grepl('SCZ', rownames(corrdf)),grepl('SCZ', colnames(corrdf))]
+
+#get order of HC/SSD columns by decreasing columnsum value
+SCZ_order <- colnames(SCZ_df[order(colSums(corrdf[, names(corrdf) %in% names(SCZ_df)]), decreasing=T)])
+
+#make explicit the desired organization of the correlation matrix 
+order <- c(SCZ_order)
+#reorganize corrmat as desired
+corrdf <- corrdf[order,order]
+
+#MAKE PLOT FIGURE 5
+#set custom colour scale, for plot
+myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
+#make sure corrmat is a matrix, for plotting
+corrdf <- as.matrix(corrdf)
+#visualize matrix for SCZ only
+corrplot(corrdf, 
+         method='color', #get full square, instead of circles
+         col.lim=c(0,1), #set limits of colour scale
+         cl.length =3,
+         col=myColours(100)) #use 100 unique colour shared
