@@ -13,10 +13,10 @@ ggplot(FWD_0_5, aes(Group, cor_dis)) +
     ggsignif::geom_signif(
         comparisons = list(c("Ctrl", "Bip"), c("Ctrl","Scz"), c("Bip", "Scz")),
         map_signif_level = TRUE)+ylab('Mean correlational distance')+geom_point() 
-###main variable (Figure 2B)
-ggplot(Cordis,aes(y=cor_dis,x=age,color))+geom_point()+ylab('Mean correlational distance')+xlab('Age')+stat_smooth(method="lm",se=TRUE) 
-###interaction (Figure 2C)
+        
+###interaction (Figure 2B&C)
 ggplot(Cordis,aes(y=cor_dis,x=nback_dprime2,color=Group))+geom_point()+ylab('Mean correlational distance')+xlab(‘2-Back D’)+stat_smooth(method="lm",se=TRUE)
+interactions::interact_plot(neg_full_model, modx = "age", pred = "nback_dprime2", plot.points = TRUE, interval = TRUE, point.size = 1, point.alpha = 0.4) +theme_gray()
 
 ###################CONTROL LINEAR MODEL
 model_CTRL = lm(formula = cor_dis ~ gender + age + nback_dprime2 + mean_FD + 
@@ -45,8 +45,4 @@ Anova(model_SCZ)
 ## main variables (Figure 6A&B)
 ggplot(FWD_0_5_SCHIZOPHRENIA,aes(y=cor_dis,x=illness_duration))+geom_point()+ylab('Mean correlational distance')+xlab(‘Illness Duration’)+stat_smooth(method="lm",se=TRUE) #FIGURE 6A
 ggplot(FWD_0_5_SCHIZOPHRENIA,aes(y=cor_dis,x=nback_dprime2))+geom_point()+ylab('Mean correlational distance')+xlab(‘2-Back D’ ’)+stat_smooth(method="lm",se=TRUE) #FIGURE 6B
-##interactions plotted (Figure 6C&D)
-interactions::interact_plot(model_SCZ, pred = nback_dprime2, modx = illness_duration, interval = TRUE,
-  int.type = c("confidence"), int.width = 0.95, line.thickness = 1) #FIGURE 6C
-  interactions::interact_plot(model_SCZ, pred = nback_dprime2, modx = age, interval = TRUE,
-  int.type = c("confidence"), int.width = 0.95, line.thickness = 1) #FIGURE 6D
+
