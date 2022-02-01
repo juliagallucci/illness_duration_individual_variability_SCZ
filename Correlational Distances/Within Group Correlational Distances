@@ -32,7 +32,7 @@ order <- c(CTRL_order)
 #reorganize corrmat as desired
 corrdf <- corrdf[order,order]
 
-#MAKE PLOT FIGURE 5
+#MAKE PLOT FIGURE 4
 #set custom colour scale, for plot
 myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
 #make sure corrmat is a matrix, for plotting
@@ -53,7 +53,7 @@ list_of_files_parcellation_bip <- list.files(path = "/mnt/tigrlab/projects/jgall
 txt_files_df_parcellation_bip <- lapply(list_of_files_parcellation_bip, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
 #combie text files into a dataframe
 combined_df_parcellation_bip <- do.call("cbind", lapply(txt_files_df_parcellation_bip, as.data.frame))
-#108 participants (rows) by 268 ROIS (columns)
+#107 participants (rows) by 268 ROIS (columns)
 df.final_parcellation_bip <- as.data.frame(t(combined_df_parcellation_bip))
 
 #pairwise correlational distance
@@ -62,7 +62,7 @@ corr = rdist::pdist(df.final_parcellation_bip, metric = "correlation")
 
 corrdf = as.data.frame(corr)
 #rows belong to BIP, and add unique identifier 
-rownames(corrdf) <- paste(c(rep('BIP', 108)), seq(1:nrow(corrdf)), sep='_')
+rownames(corrdf) <- paste(c(rep('BIP', 107)), seq(1:nrow(corrdf)), sep='_')
 colnames(corrdf) <- rownames(corrdf)
 
 #THIS IS WHERE WE'RE ORDERING AND SORTING
@@ -74,7 +74,7 @@ order <- c(BIP_order)
 #reorganize corrmat as desired
 corrdf <- corrdf[order,order]
 
-#MAKE PLOT FIGURE 5
+#MAKE PLOT FIGURE 4
 #set custom colour scale, for plot
 myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
 #make sure corrmat is a matrix, for plotting
@@ -96,7 +96,7 @@ list_of_files_parcellation_scz <- list.files(path = "/mnt/tigrlab/projects/jgall
 txt_files_df_parcellation_scz <- lapply(list_of_files_parcellation_scz, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
 #combie text files into a dataframe
 combined_df_parcellation_scz <- do.call("cbind", lapply(txt_files_df_parcellation_scz, as.data.frame))
-#239 participants (rows) by 268 ROIS (columns)
+#232 participants (rows) by 268 ROIS (columns)
 df.final_parcellation_scz <- as.data.frame(t(combined_df_parcellation_scz))
 
 #pairwise correlational distance
@@ -105,7 +105,7 @@ corr = rdist::pdist(df.final_parcellation_scz, metric = "correlation")
 
 corrdf = as.data.frame(corr)
 #rows belong to SCZ and add unique identifier 
-rownames(corrdf) <- paste(c(rep('SCZ', 239)), seq(1:nrow(corrdf)), sep='_')
+rownames(corrdf) <- paste(c(rep('SCZ', 232)), seq(1:nrow(corrdf)), sep='_')
 colnames(corrdf) <- rownames(corrdf)
 
 #THIS IS WHERE WE'RE ORDERING AND SORTING
@@ -120,7 +120,7 @@ order <- c(SCZ_order)
 #reorganize corrmat as desired
 corrdf <- corrdf[order,order]
 
-#MAKE PLOT FIGURE 5
+#MAKE PLOT FIGURE 4
 #set custom colour scale, for plot
 myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
 #make sure corrmat is a matrix, for plotting
