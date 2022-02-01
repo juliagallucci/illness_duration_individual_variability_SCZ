@@ -7,9 +7,9 @@ summary(full_model)
 Anova(full_model)
 
 ###################FULL MODEL FIGURE 2
-###boxplot of mean correlational distance (Figure 2A)
+###violin plot of mean correlational distance (Figure 2A)
 ggplot(FWD_0_5, aes(Group, cor_dis)) +
-    geom_boxplot() + ylim(0.5,0.8) +
+    geom_violin() + ylim(0.5,0.8) +
     ggsignif::geom_signif(
         comparisons = list(c("Ctrl", "Bip"), c("Ctrl","Scz"), c("Bip", "Scz")),
         map_signif_level = TRUE)+ylab('Mean correlational distance')+geom_point() 
@@ -24,25 +24,28 @@ model_CTRL = lm(formula = cor_dis ~ gender + age + nback_dprime2 + mean_FD +
 summary(model_CTRL)
 Anova(model_CTRL)
 ###################BIPOLAR LINEAR MODEL
-model_BIP = lm(formula = cor_dis ~ age + illness_duration + mean_FD + nback_dprime2 + 
+model_BIP = lm(formula = cor_dis ~ gender + age + illness_duration + mean_FD + nback_dprime2 + 
     age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_BIPOLAR)
 summary(model_BIP)
 Anova(model_BIP)
 ###################SCHIZOPHRENIA LINEAR MODEL
-model_SCZ = lm(formula = cor_dis ~ age + gender + illness_duration + mean_FD + 
+model_SCZ = lm(formula = cor_dis ~ gender + age + illness_duration + mean_FD + 
     nback_dprime2 + age:nback_dprime2 + illness_duration:nback_dprime2, 
-    data = FWD_0_5_SCHIZOPHRENIA)
+    data = FWD_05_SCHIZOPHRENIA)
 summary(model_SCZ)
  
 model_SCZ_with_PANSS = lm(formula = cor_dis ~ gender + age + illness_duration + nback_dprime2 + 
     mean_FD + PANSS_N_Total + PANSS_P_Total + PANSS_PG_Total + 
-    illness_duration:nback_dprime2 + age:nback_dprime2, data = FWD_0_5_SCHIZOPHRENIA) 
+    illness_duration:nback_dprime2 + age:nback_dprime2, data = FWD_05_SCHIZOPHRENIA) 
 summary(model_SCZ_with_PANSS) ### did not contribute much to the model, PANSS not included
 
 Anova(model_SCZ)
     
-###################SCZ MODEL FIGURE 6
-## main variables (Figure 6A&B)
-ggplot(FWD_0_5_SCHIZOPHRENIA,aes(y=cor_dis,x=illness_duration))+geom_point()+ylab('Mean correlational distance')+xlab(‘Illness Duration’)+stat_smooth(method="lm",se=TRUE) #FIGURE 6A
-ggplot(FWD_0_5_SCHIZOPHRENIA,aes(y=cor_dis,x=nback_dprime2))+geom_point()+ylab('Mean correlational distance')+xlab(‘2-Back D’ ’)+stat_smooth(method="lm",se=TRUE) #FIGURE 6B
+###################SCZ MODEL FIGURE 5
+## illness duration effects (Figure 5)
+combine = data.frame()
+combine = rbind(combine,FWD_05_BIPOLAR)
+combine = rbind(combine,FWD_05_SCHIZOPHRENIA)
+ggplot(combine,aes(y=cor_dis,x=illness_duration, colour = Group))+geom_point()+ylab('Mean correlational distance')+xlab(‘Illness Duration’)+stat_smooth(method="lm",se=TRUE) 
+
 
