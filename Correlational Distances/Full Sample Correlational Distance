@@ -6,7 +6,7 @@ list_of_files_parcellation <- list.files(path = "/mnt/tigrlab/projects/jgallucci
 txt_files_df_parcellation <- lapply(list_of_files_parcellation, function(x) {x = read.table(file = x, header = FALSE, sep =",")})
 #combie text files into a dataframe
 combined_df_parcellation <- do.call("cbind", lapply(txt_files_df_parcellation, as.data.frame))
-#559 participants (rows) by 268 ROIS (columns)
+#551 participants (rows) by 268 ROIS (columns)
 df.final_parcellation <- as.data.frame(t(combined_df_parcellation))
 
 #pairwise correlational distance
