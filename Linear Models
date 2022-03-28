@@ -13,8 +13,10 @@ ggplot(FWD_0_5, aes(Group, cor_dis)) +
     ggsignif::geom_signif(
         comparisons = list(c("Ctrl", "Bip"), c("Ctrl","Scz"), c("Bip", "Scz")),
         map_signif_level = TRUE)+ylab('Mean correlational distance')+geom_point() 
-        
-###interaction (Figure 2B&C)
+### Age effect (Figure 2B)
+ggplot(Cordis,aes(y=cor_dis,x=age))+geom_point()+ylab('Mean correlational distance')+xlab(‘Age’)+stat_smooth(method="lm",se=TRUE) 
+
+###interaction (Figure 2C&D)
 ggplot(Cordis,aes(y=cor_dis,x=nback_dprime2,color=Group))+geom_point()+ylab('Mean correlational distance')+xlab(‘2-Back D’)+stat_smooth(method="lm",se=TRUE)
 interactions::interact_plot(neg_full_model, modx = "age", pred = "nback_dprime2", plot.points = TRUE, interval = TRUE, point.size = 1, point.alpha = 0.4) +theme_gray()
 
@@ -41,8 +43,8 @@ summary(model_SCZ_with_PANSS) ### did not contribute much to the model, PANSS no
 
 Anova(model_SCZ)
     
-###################SCZ MODEL FIGURE 5
-## illness duration effects (Figure 5)
+###################SCZ MODEL FIGURE 6
+## illness duration effects (Figure 6)
 combine = data.frame()
 combine = rbind(combine,FWD_05_BIPOLAR)
 combine = rbind(combine,FWD_05_SCHIZOPHRENIA)
