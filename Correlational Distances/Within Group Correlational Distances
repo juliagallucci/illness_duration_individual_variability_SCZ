@@ -32,7 +32,7 @@ order <- c(CTRL_order)
 #reorganize corrmat as desired
 corrdf <- corrdf[order,order]
 
-#MAKE PLOT FIGURE 4
+#MAKE PLOT FIGURE 5
 #set custom colour scale, for plot
 myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
 #make sure corrmat is a matrix, for plotting
@@ -74,7 +74,7 @@ order <- c(BIP_order)
 #reorganize corrmat as desired
 corrdf <- corrdf[order,order]
 
-#MAKE PLOT FIGURE 4
+#MAKE PLOT FIGURE 5
 #set custom colour scale, for plot
 myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
 #make sure corrmat is a matrix, for plotting
@@ -120,7 +120,7 @@ order <- c(SCZ_order)
 #reorganize corrmat as desired
 corrdf <- corrdf[order,order]
 
-#MAKE PLOT FIGURE 4
+#MAKE PLOT FIGURE 5
 #set custom colour scale, for plot
 myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
 #make sure corrmat is a matrix, for plotting
