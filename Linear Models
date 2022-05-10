@@ -3,6 +3,19 @@ library(car)
 full_model = lm(formula = cor_dis ~ Group + age + gender + nback_dprime2 + 
     mean_FD + Group:age + Group:nback_dprime2 + Group:gender + 
     Group:mean_FD + age:nback_dprime2, data = FWD_0_5)
+
+full_model_squared = lm(formula = cor_dis ~ Group + age + I(age^2) + gender + nback_dprime2 + 
+    mean_FD + Group:age + Group:I(age^2) + Group:nback_dprime2 + Group:gender + 
+    Group:mean_FD + age:nback_dprime2, data = FWD_0_5)
+    
+anova(full_model, full_model_squared) ##nonsignificant difference between models
+
+full_model_cubed = lm(formula = cor_dis ~ Group + age + I(age^2) + I(age^3) + gender + nback_dprime2 + 
+    mean_FD + Group:age + Group:I(age^2) + Group:I(age^3) + Group:nback_dprime2 + Group:gender + 
+    Group:mean_FD + age:nback_dprime2, data = FWD_0_5)
+    
+anova(full_model, full_model_cubed) ##nonsignificant difference between models; nonlinear age effects not included   
+    
 summary(full_model)
 Anova(full_model)
 
@@ -23,25 +36,80 @@ interactions::interact_plot(neg_full_model, modx = "age", pred = "nback_dprime2"
 ###################CONTROL LINEAR MODEL
 model_CTRL = lm(formula = cor_dis ~ gender + age + nback_dprime2 + mean_FD + 
     age:nback_dprime2, data = FWD_05_CONTROLS)
+    
+model_CTRL_squared = lm(formula = cor_dis ~ gender + age + I(age^2) +nback_dprime2 + mean_FD + 
+    age:nback_dprime2, data = FWD_05_CONTROLS) 
+
+anova(model_CTRL, model_CTRL_squared) ##nonsignificant difference between models
+
+model_CTRL_cubed = lm(formula = cor_dis ~ gender + age + I(age^2) + I(age^3) + nback_dprime2 + mean_FD + 
+    age:nback_dprime2, data = FWD_05_CONTROLS)
+    
+anova(model_CTRL, model_CTRL_cubed) ##nonsignificant difference between models; nonlinear age effects not included
+
 summary(model_CTRL)
 Anova(model_CTRL)
+
 ###################BIPOLAR LINEAR MODEL
 model_BIP = lm(formula = cor_dis ~ gender + age + illness_duration + mean_FD + nback_dprime2 + 
     age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_BIPOLAR)
+    
+model_BIP_age_squared = lm(formula = cor_dis ~ gender + age + I(age^2)+ illness_duration + mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_BIPOLAR)
+
+anova(model_BIP, model_BIP_age_squared) ##nonsignificant difference between models
+
+model_BIP_age_cubed = lm(formula = cor_dis ~ gender + age + I(age^2)+ I(age^3)+ illness_duration + mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_BIPOLAR)
+
+anova(model_BIP, model_BIP_age_cubed) ##nonsignificant difference between models; nonlinear age effects not included
+
+model_BIP_dur_squared = lm(formula = cor_dis ~ gender + age + illness_duration + I(illness_duration^2)+ mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_BIPOLAR)
+
+anova(model_BIP, model_BIP_dur_squared) ##nonsignificant difference between models
+
+model_BIP_dur_cubed = lm(formula = cor_dis ~ gender + age + illness_duration + I(illness_duration^2) + I(illness_duration^3) + mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_BIPOLAR)
+    
+anova(model_BIP, model_BIP_dur_cubed) ##nonsignificant difference between models; nonlinear illness duration effects not included
+
 summary(model_BIP)
 Anova(model_BIP)
 ###################SCHIZOPHRENIA LINEAR MODEL
 model_SCZ = lm(formula = cor_dis ~ gender + age + illness_duration + mean_FD + 
     nback_dprime2 + age:nback_dprime2 + illness_duration:nback_dprime2, 
-    data = FWD_05_SCHIZOPHRENIA)
-summary(model_SCZ)
+    data = FWD_05_SCHIZOPHRENIA
  
 model_SCZ_with_PANSS = lm(formula = cor_dis ~ gender + age + illness_duration + nback_dprime2 + 
     mean_FD + PANSS_N_Total + PANSS_P_Total + PANSS_PG_Total + 
     illness_duration:nback_dprime2 + age:nback_dprime2, data = FWD_05_SCHIZOPHRENIA) 
-summary(model_SCZ_with_PANSS) ### did not contribute much to the model, PANSS not included
+    
+anova(model_SCZ, model_SCZ_with_PANSS) ### did not contribute much to the model, PANSS not included
 
-Anova(model_SCZ)
+model_SCZ_age_squared = lm(formula = cor_dis ~ gender + age + I(age^2)+ illness_duration + mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_SCHIZOPHRENIA)
+
+anova(model_SCZ, model_SCZ_age_squared) ##nonsignificant difference between models
+
+model_SCZ_age_cubed = lm(formula = cor_dis ~ gender + age + I(age^2)+ I(age^3)+ illness_duration + mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_SCHIZOPHRENIA)
+
+anova(model_SCZ, model_SCZ_age_cubed) ##significant difference between models; nonlinear age effects included
+
+
+model_SCZ_dur_squared = lm(formula = cor_dis ~ gender + age + illness_duration + I(illness_duration^2)+ mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_SCHIZOPHRENIA)
+
+anova(model_SCZ_age_cubed, model_SCZ_dur_squared) ##nonsignificant difference between models
+
+model_SCZ_dur_cubed = lm(formula = cor_dis ~ gender + age + illness_duration + I(illness_duration^2) + I(illness_duration^3) + mean_FD + nback_dprime2 + 
+    age:nback_dprime2 + illness_duration:nback_dprime2, data = FWD_05_SCHIZOPHRENIA)
+    
+anova(model_SCZ_age_cubed, model_SCZ_dur_cubed) ##nonsignificant difference between models; nonlinear illness duration effects not included
+
+summary(model_SCZ_age_cubed)
+Anova(model_SCZ_age_cubed)
     
 ###################SCZ MODEL FIGURE 6
 ## illness duration effects (Figure 6)
