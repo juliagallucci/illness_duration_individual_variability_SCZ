@@ -112,7 +112,10 @@ summary(model_SCZ_age_cubed)
 Anova(model_SCZ_age_cubed)
     
 ###################SCZ MODEL FIGURE 6
-## illness duration effects (Figure 6)
+## cubic age effects (Figure 6A)
+ggplot(FWD_05_SCHIZOPHRENIA, aes(age, cor_distance)) + geom_point() + geom_smooth(method = lm, formula = y~poly(x,degree = 3))
+
+## illness duration effects (Figure 6B)
 combine = data.frame()
 combine = rbind(combine,FWD_05_BIPOLAR)
 combine = rbind(combine,FWD_05_SCHIZOPHRENIA)
